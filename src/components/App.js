@@ -15,7 +15,8 @@ import {
   setFocus,
   removeCreature,
   addCreature,
-  resetBattle
+  resetBattle,
+  toggleReminders
 } from '../state/BattleManager';
 import {
   killCreature,
@@ -63,6 +64,7 @@ class App extends Component {
     this.saveBattle = this.saveBattle.bind(this);
     this.loadBattle = this.loadBattle.bind(this);
     this.dismissErrors = this.dismissErrors.bind(this);
+    this.toggleReminders = this.toggleReminders.bind(this);
   }
 
   componentDidMount() {
@@ -160,7 +162,11 @@ class App extends Component {
   }
 
   dismissErrors() {
-    this.setState(dismissErrors(this.state))
+    this.setState(dismissErrors(this.state));
+  }
+
+  toggleReminders() {
+    this.setState(toggleReminders(this.state));
   }
 
   render() {
@@ -188,10 +194,12 @@ class App extends Component {
           round={this.state.round}
           secondsElapsed={secondsElapsed}
           creatures={this.state.creatureCount}
+          remindersEnabled={this.state.remindersEnabled}
           nextInitiative={this.nextInitiative}
           resetBattle={this.resetBattle}
           saveBattle={this.saveBattle}
           loadBattle={this.loadBattle}
+          toggleReminders={this.toggleReminders}
           isSaveLoadSupported={isSaveLoadSupported}
         />
         { errors && <Errors

@@ -8,6 +8,7 @@ import OptionsMenuOpenIcon from './icons/OptionsMenuOpenIcon';
 import SaveIcon from './icons/SaveIcon';
 import LoadIcon from './icons/LoadIcon';
 import ResetIcon from './icons/ResetIcon';
+import ReminderIcon from './icons/ReminderIcon';
 import { hotkeys } from '../hotkeys/hotkeys';
 import { isSaveLoadSupported } from '../state/AppManager';
 
@@ -51,15 +52,18 @@ class BattleToolbar extends Component {
       round,
       secondsElapsed,
       creatures,
+      remindersEnabled,
       nextInitiative,
       resetBattle,
       saveBattle,
-      loadBattle
+      loadBattle,
+      toggleReminders
     } = this.props;
 
     const buttonClass = 'battle-toolbar--button';
     const creaturesAdded = creatures > 0;
     const buttonClasses = creaturesAdded ? buttonClass : `${buttonClass} ${buttonClass}__disabled`;
+    const reminderButtonClasses = remindersEnabled ? buttonClass : `${buttonClass} ${buttonClass}__disabled`;
     const nextButtonLabel = round === 0 ? <StartBattleIcon /> : <NextInitiativeIcon />;
     const nextButtonTitle = round === 0 ? 'Start battle' : 'Next initiative';
     const optionsMenuIcon = this.state.optionsExpanded ? <OptionsMenuOpenIcon /> : <OptionsMenuClosedIcon />;
@@ -125,6 +129,12 @@ class BattleToolbar extends Component {
                 className={`${buttonClass} ${buttonClass}__load`}
                 onClick={() => {this.toggleOptions(); this.fileSelector.current.click();}}
               ><LoadIcon /></button>
+              <button
+                title="Enable Reminders"
+                className={reminderButtonClasses}
+                onClick={() => {this.toggleOptions(); toggleReminders();}}
+                // disabled={!remindersEnabled}
+              ><ReminderIcon /></button>
               <ResetButton />
             </div>
           </div>
