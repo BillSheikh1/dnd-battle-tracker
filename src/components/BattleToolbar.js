@@ -63,7 +63,7 @@ class BattleToolbar extends Component {
     const buttonClass = 'battle-toolbar--button';
     const creaturesAdded = creatures > 0;
     const buttonClasses = creaturesAdded ? buttonClass : `${buttonClass} ${buttonClass}__disabled`;
-    const reminderButtonClasses = remindersEnabled ? buttonClass : `${buttonClass} ${buttonClass}__disabled`;
+    const reminderButtonClasses = remindersEnabled ? `${buttonClass} button__selected` : buttonClass;
     const nextButtonLabel = round === 0 ? <StartBattleIcon /> : <NextInitiativeIcon />;
     const nextButtonTitle = round === 0 ? 'Start battle' : 'Next initiative';
     const optionsMenuIcon = this.state.optionsExpanded ? <OptionsMenuOpenIcon /> : <OptionsMenuClosedIcon />;
@@ -130,10 +130,9 @@ class BattleToolbar extends Component {
                 onClick={() => {this.toggleOptions(); this.fileSelector.current.click();}}
               ><LoadIcon /></button>
               <button
-                title="Enable Reminders"
+                title={remindersEnabled ? "Disable Reminders" : "Enable Reminders"}
                 className={reminderButtonClasses}
                 onClick={() => {this.toggleOptions(); toggleReminders();}}
-                // disabled={!remindersEnabled}
               ><ReminderIcon /></button>
               <ResetButton />
             </div>

@@ -27,7 +27,7 @@ function CreatureToolbar({
   const statusButtonTitle = alive ? 'Kill/Make unconscious' : 'Stabalize';
   const statusButtonIcon = alive ? <KillIcon /> : <StabalizeIcon />;
   const statusButtonClass = 'creature-toolbar--button';
-  const statusButtonClasses = alive ? statusButtonClass : `${statusButtonClass} ${statusButtonClass}__dead`
+  const statusButtonClasses = alive ? statusButtonClass : `${statusButtonClass} button__selected`
   const enableHealthItems = healthPoints !== undefined;
   const enableDamage = healthPoints > 0;
   const enableHeal = healthPoints < maxHealthPoints;

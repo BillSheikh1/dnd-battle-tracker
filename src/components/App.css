@@ -13,6 +13,10 @@ button, .button {
   box-shadow: 0 0 5px #979AA4;
 }
 
+.button__selected {
+  background-color: lightgrey;
+}
+
 a {
   text-decoration-color: #822000;
   color: black;
@@ -303,10 +307,6 @@ input[type=number].input {
   margin-top: 22px;
   grid-column: span 2;
   padding-left: 10px;
-}
-
-.creature-toolbar--button__dead {
-  background-color: lightgrey;
 }
 
 .creature-toolbar--dropdown {
