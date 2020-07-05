@@ -8,8 +8,7 @@ import {
   setFocus,
   removeCreature,
   addCreature,
-  resetBattle,
-  toggleReminders
+  resetBattle
 } from './BattleManager';
 import { createCreature, validateCreature, resetCreature } from './CreatureManager';
 
@@ -55,6 +54,7 @@ const defaultState = {
   round: 1,
   ariaAnnouncements: [],
   errors: [],
+  reminders: [],
   createCreatureErrors: {},
   remindersEnabled: false
 };
@@ -74,6 +74,7 @@ describe('newBattleState', () => {
       round: 0,
       ariaAnnouncements: [],
       errors: [],
+      reminders: [],
       createCreatureErrors: {},
       remindersEnabled: false
     };
@@ -107,35 +108,13 @@ describe('resetBattle', () => {
       round: 0,
       ariaAnnouncements: ['battle reset'],
       errors: [],
+      reminders: [],
       createCreatureErrors: {},
       remindersEnabled: false
     };
 
     expect(resetBattle(defaultState)).toEqual(expected);
     expect(resetCreature).toHaveBeenCalledTimes(2);
-  });
-});
-
-describe('toggleReminders', () => {
-  it('sets remindersEnabled to true if it is false', () => {
-    const expected = {
-      ...defaultState,
-      remindersEnabled: true
-    };
-    expect(toggleReminders(defaultState)).toEqual(expected);
-  });
-
-  it('sets remindersEnabled to false if it is true', () => {
-    const state = {
-      ...defaultState,
-      remindersEnabled: true
-    };
-
-    const expected = {
-      ...defaultState,
-      remindersEnabled: false
-    };
-    expect(toggleReminders(state)).toEqual(expected);
   });
 });
 

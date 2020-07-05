@@ -23,6 +23,7 @@ export const newBattleState = {
   round: 0,
   ariaAnnouncements: [],
   errors: [],
+  reminders: [],
   createCreatureErrors: {},
   remindersEnabled: false
 };
@@ -228,8 +229,4 @@ export function resetBattle(state) {
   const resetLockedCreatures = lockedCreatures.map((creature, id) => resetCreature(id, creature));
   const ariaAnnouncements = state.ariaAnnouncements.concat(['battle reset']);
   return {...newBattleState, creatureCount, creatureIdCount: creatureCount, creatures: resetLockedCreatures, ariaAnnouncements};
-}
-
-export function toggleReminders(state) {
-  return {...state, remindersEnabled: !state.remindersEnabled};
 }

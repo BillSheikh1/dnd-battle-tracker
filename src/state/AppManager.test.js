@@ -1,7 +1,18 @@
-import { save, load, isSaveLoadSupported, dismissErrors, addError, addErrors } from './AppManager';
+import { 
+  save,
+  load,
+  isSaveLoadSupported,
+  dismissErrors,
+  addError,
+  damageCreature as appDamageCreature
+} from './AppManager';
+import { damageCreature } from './CreatureManager';
+import { addReminder } from './ReminderManager';
 import FileSystem from '../util/fileSystem';
 
 jest.mock('../util/fileSystem');
+jest.mock('./CreatureManager');
+jest.mock('./ReminderManager');
 
 const defaultState = {
   creatures:[
@@ -46,9 +57,7 @@ const defaultState = {
 
 
 beforeEach(() => {
-  FileSystem.save.mockReset();
-  FileSystem.load.mockReset();
-  FileSystem.isSaveSupported.mockReset();
+  jest.clearAllMocks();
 });
 
 describe('save', () => {
@@ -220,5 +229,35 @@ describe('addError', () => {
 
     const result = addError(state, 'three');
     expect(result).toEqual(errors);
+  });
+});
+
+
+describe('damageCreature', () => {
+  it('damages a creature and adds a reminder', () => {
+    const stateWithDamage = {
+      ...defaultState,
+      creatures: [
+        defaultState.creatures[0],
+        {
+          ...defaultState.creatures[1],
+          health: 5
+        },
+        defaultState.creatures[2],
+      ]
+    };
+    const reminder = 'Did the creature have any damage resistances, immunities or vulnerabilities?';
+    const stateWithReminder = {
+      ...stateWithDamage,
+      reminders: [reminder]
+    };
+    damageCreature.mockReturnValue(stateWithDamage);
+    addReminder.mockReturnValue(stateWithReminder);
+    
+    const result = appDamageCreature(defaultState, 1, 5);
+
+    expect(result).toEqual(stateWithReminder);
+    expect(damageCreature).toHaveBeenCalledWith(defaultState, 1, 5);
+    expect(addReminder).toHaveBeenCalledWith(stateWithDamage, reminder);
   });
 });

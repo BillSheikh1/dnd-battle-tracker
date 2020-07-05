@@ -15,13 +15,11 @@ import {
   setFocus,
   removeCreature,
   addCreature,
-  resetBattle,
-  toggleReminders
+  resetBattle
 } from '../state/BattleManager';
 import {
   killCreature,
   stabalizeCreature,
-  damageCreature,
   healCreature,
   addNoteToCreature,
   removeNoteFromCreature,
@@ -33,8 +31,10 @@ import {
   save,
   load,
   isSaveLoadSupported,
-  dismissErrors
+  dismissErrors,
+  damageCreature
 } from '../state/AppManager';
+import { toggleReminders } from '../state/ReminderManager';
 import Footer from './Footer';
 import Errors from './Errors';
 import { hotkeys } from '../hotkeys/hotkeys';
@@ -186,6 +186,7 @@ class App extends Component {
     };
 
     const errors = this.state.errors.length > 0;
+    const reminders = this.state.reminders.length > 0;
 
     return (
       <React.Fragment>
@@ -204,6 +205,11 @@ class App extends Component {
         />
         { errors && <Errors
             errors={this.state.errors}
+            dismissErrors={this.dismissErrors}
+          />
+         }
+        { reminders && <Errors
+            errors={this.state.reminders}
             dismissErrors={this.dismissErrors}
           />
          }

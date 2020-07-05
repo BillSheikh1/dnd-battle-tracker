@@ -1,6 +1,8 @@
 import { validate } from 'jsonschema';
 import find from 'lodash.find';
 import FileSystem from '../util/fileSystem';
+import { damageCreature as damage } from './CreatureManager';
+import { addReminder } from './ReminderManager';
 
 const appSchema = require('../resources/app-schema.json');
 
@@ -70,4 +72,10 @@ export function addError(state, errorToAdd) {
   }
 
   return state.errors.concat(errorToAdd);
+}
+
+export function damageCreature(state, creatureId, damageToApply) {
+  const damageResult = damage(state, creatureId, damageToApply);
+  const reminder = 'Did the creature have any damage resistances, immunities or vulnerabilities?';
+  return addReminder(damageResult, reminder);
 }
